@@ -1,0 +1,16 @@
+[default]
+<% if $ssl and $management_ssl {-%>
+ssl = True
+ssl_ca_cert_file = <%= $ssl_management_cacert %>
+ssl_cert_file = <%= $ssl_management_cert %>
+ssl_key_file = <%= $ssl_management_key %>
+port = <%= $ssl_management_port %>
+<% unless $management_hostname {-%>
+hostname = <%= $fqdn %>
+<% } -%>
+<% } else {-%>
+port = <%= $management_port %>
+<% } -%>
+<% if $management_hostname { %>
+hostname = <%= $management_hostname %>
+<% } -%>

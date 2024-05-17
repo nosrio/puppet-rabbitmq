@@ -1,0 +1,3 @@
+% This file managed by Puppet
+% Template Path: <%= $module_name %>/templates/enabled_plugins
+[<%= ($_plugins.uniq).join(',')%>].

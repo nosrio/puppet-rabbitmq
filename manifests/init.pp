@@ -364,7 +364,7 @@ class rabbitmq (
   String $default_user                                                                             = 'guest',
   String $default_pass                                                                             = 'guest',
   Boolean $delete_guest_user                                                                       = false,
-  String $env_config                                                                               = 'rabbitmq/rabbitmq-env.conf.erb',
+  String $env_config                                                                               = 'rabbitmq/rabbitmq-env.conf.epp',
   Stdlib::Absolutepath $env_config_path                                                            = '/etc/rabbitmq/rabbitmq-env.conf',
   Optional[String] $erlang_cookie                                                                  = undef,
   Optional[String] $interface                                                                      = undef,

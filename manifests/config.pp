@@ -174,7 +174,7 @@ class rabbitmq::config {
   file { 'rabbitmq-env.config':
     ensure  => file,
     path    => $env_config_path,
-    content => template($env_config),
+    content => epp($env_config),
     owner   => $rabbitmq_user,
     group   => $rabbitmq_group,
     mode    => '0640',
@@ -190,10 +190,17 @@ class rabbitmq::config {
   }
 
   if $use_config_file_for_plugins {
+    $managent_plugin = $admin_enable or $management_enable ? { true => 'rabbitmq_management', false => undef }
+    $stomp_plugin = $stomp_ensure ? { true => 'rabbitmq_stomp', false => undef }
+    $auth_backend_ldap_plugin = $ldap_auth ? { true => 'rabbitmq_auth_backend_ldap', false => undef }
+    $shovel_plugin = $config_shovel ? { true => 'rabbitmq_shovel', false => undef }
+    $shovel_management_plugin = $config_shovel and ($admin_enable or $management_enable) ? { true => 'rabbitmq_shovel_management', false => undef }
+
+    $_plugins = join($plugins, $managent_plugin, $stomp_plugin, $auth_backend_ldap_plugin, $shovel_plugin, $shovel_management_plugin)
     file { 'enabled_plugins':
       ensure  => file,
       path    => '/etc/rabbitmq/enabled_plugins',
-      content => template('rabbitmq/enabled_plugins.erb'),
+      content => epp('rabbitmq/enabled_plugins.epp'),
       owner   => $rabbitmq_user,
       group   => $rabbitmq_group,
       mode    => '0640',
@@ -205,7 +212,7 @@ class rabbitmq::config {
     file { 'rabbitmqadmin.conf':
       ensure  => file,
       path    => '/etc/rabbitmq/rabbitmqadmin.conf',
-      content => template('rabbitmq/rabbitmqadmin.conf.erb'),
+      content => epp('rabbitmq/rabbitmqadmin.conf.epp'),
       owner   => $rabbitmq_user,
       group   => $rabbitmq_group,
       mode    => '0640',
@@ -217,7 +224,7 @@ class rabbitmq::config {
     'Debian': {
       file { '/etc/default/rabbitmq-server':
         ensure  => file,
-        content => template('rabbitmq/default.erb'),
+        content => epp('rabbitmq/default.epp'),
         mode    => '0644',
         owner   => '0',
         group   => '0',

@@ -1,0 +1,5 @@
+<% $environment_variables.keys.sort.each |$k| { -%>
+  <%- unless $environment_variables[$k] == Undef {-%>
+<%= $k %>=<%= $environment_variables[$k] %>
+  <%-} -%>
+<% } -%>
