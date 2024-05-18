@@ -504,7 +504,7 @@ Data type: `String`
 
 The template file to use for rabbitmq_env.config.
 
-Default value: `'rabbitmq/rabbitmq-env.conf.erb'`
+Default value: `'rabbitmq/rabbitmq-env.conf.epp'`
 
 ##### <a name="-rabbitmq--env_config_path"></a>`env_config_path`
 

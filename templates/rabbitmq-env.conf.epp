@@ -1,5 +1,5 @@
-<% $environment_variables.keys.sort.each |$k| { -%>
-  <%- unless $environment_variables[$k] == Undef {-%>
-<%= $k %>=<%= $environment_variables[$k] %>
+<% $rabbitmq::config::environment_variables.keys.sort.each |$k| { -%>
+  <%- unless $rabbitmq::config::environment_variables[$k] == Undef {-%>
+<%= $k %>=<%= $rabbitmq::config::environment_variables[$k] %>
   <%-} -%>
 <% } -%>
