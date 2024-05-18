@@ -117,15 +117,15 @@
     <%-} -%>
   ]}
 <%- } -%>
-<%- if $rabbitmq::config::admin_enable or $rabbitmq::config::management_enable or $rabbitmq::config::config_management_variables {-%>,
+<%- if $rabbitmq::config::admin_enable or $rabbitmq::config::management_enable or ! $rabbitmq::config::config_management_variables.empty {-%>,
   {rabbitmq_management, [
-    <%- if $rabbitmq::config::config_management_variables {-%>
+    <%- if !$rabbitmq::config::config_management_variables.empty {-%>
     <%- $rabbitmq::config::config_management_variables.keys.sort.each |$k| { -%>
     {<%= $k %>, <%= $rabbitmq::config::config_management_variables[$k] %>}<%- if $k != $rabbitmq::config::config_management_variables.keys.sort[-1] { -%>,<%- } %>
     <%-} -%>
     <%-} -%>
 <%- if $rabbitmq::config::admin_enable or $rabbitmq::config::management_enable {-%>
-<%- if  $rabbitmq::config::config_management_variables {-%>,<%-}-%>
+<%- if !$rabbitmq::config::config_management_variables.empty {-%>,<%-}-%>
     {listener, [
 <%- if $rabbitmq::config::ssl and $rabbitmq::config::management_ssl {-%>
   <%- if $rabbitmq::config::management_ip_address {-%>
@@ -203,7 +203,7 @@
     {log, <%= $rabbitmq::config::ldap_log %>}
   ]}
 <%- } -%>
-<%- if $rabbitmq::config::config_shovel and $rabbitmq::config::config_shovel_statics {-%>,
+<%- if $rabbitmq::config::config_shovel and !$rabbitmq::config::config_shovel_statics.empty {-%>,
   {rabbitmq_shovel,
     [{shovels,[
       <%- $rabbitmq::config::config_shovel_statics.keys.sort.each |$key| { -%>
@@ -211,7 +211,7 @@
       <%- } -%>
     ]}]}
 <%- } -%>
-<%- if $rabbitmq::config::config_additional_variables and $rabbitmq::config::config_additional_variables {-%>,
+<%- if $rabbitmq::config::config_additional_variables and !$rabbitmq::config::config_additional_variables.empty {-%>,
 % Additional config
 <%- $rabbitmq::config::config_additional_variables.keys.sort.each |$key| {-%>
   {<%= $key %>, <%= $rabbitmq::config::config_additional_variables[$key] %>}<%- if $key != $rabbitmq::config::config_additional_variables.keys.sort[-1] {%>,<% } %>
