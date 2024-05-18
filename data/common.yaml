@@ -5,7 +5,7 @@ rabbitmq::use_config_file_for_plugins: false
 rabbitmq::cluster: {}
 rabbitmq::cluster_node_type: 'disc'
 rabbitmq::cluster_nodes: []
-rabbitmq::config: 'rabbitmq/rabbitmq.config.epp'
+rabbitmq::config: 'rabbitmq/rabbitmq.config.erb'
 rabbitmq::config_cluster: false
 rabbitmq::config_path: '/etc/rabbitmq/rabbitmq.config'
 rabbitmq::config_ranch: true
