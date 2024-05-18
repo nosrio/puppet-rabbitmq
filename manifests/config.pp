@@ -165,7 +165,7 @@ class rabbitmq::config {
   file { 'rabbitmq.config':
     ensure  => file,
     path    => $config_path,
-    content => template($config),
+    content => epp($config),
     owner   => $rabbitmq_user,
     group   => $rabbitmq_group,
     mode    => '0640',
