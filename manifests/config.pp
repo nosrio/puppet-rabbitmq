@@ -196,7 +196,7 @@ class rabbitmq::config {
     $shovel_plugin = $config_shovel ? { true => 'rabbitmq_shovel', false => undef }
     $shovel_management_plugin = $config_shovel and ($admin_enable or $management_enable) ? { true => 'rabbitmq_shovel_management', false => undef }
 
-    $_plugins = delete_undef_values($plugins + [$management_plugin, $stomp_plugin, $auth_backend_ldap_plugin, $shovel_plugin, $shovel_management_plugin])
+    $_plugins = delete_undef_values($plugins + [$managent_plugin, $stomp_plugin, $auth_backend_ldap_plugin, $shovel_plugin, $shovel_management_plugin])
 
     file { 'enabled_plugins':
       ensure  => file,
