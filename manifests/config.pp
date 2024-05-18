@@ -190,11 +190,11 @@ class rabbitmq::config {
   }
 
   if $use_config_file_for_plugins {
-    $management_plugin = ($admin_enable or $management_enable) ? { true => 'rabbitmq_management', false => undef }
-    $stomp_plugin = $stomp_ensure ? { true => 'rabbitmq_stomp', false => undef }
-    $auth_backend_ldap_plugin = $ldap_auth ? { true => 'rabbitmq_auth_backend_ldap', false => undef }
-    $shovel_plugin = $config_shovel ? { true => 'rabbitmq_shovel', false => undef }
-    $shovel_management_plugin = ($config_shovel and ($admin_enable or $management_enable)) ? { true => 'rabbitmq_shovel_management', false => undef }
+    $management_plugin = if ($admin_enable or $management_enable) { 'rabbitmq_management' } else { undef }
+    $stomp_plugin = if $stomp_ensure { 'rabbitmq_stomp' } else { undef }
+    $auth_backend_ldap_plugin = if $ldap_auth { 'rabbitmq_auth_backend_ldap' } else { undef }
+    $shovel_plugin = if $config_shovel { 'rabbitmq_shovel' } else { undef }
+    $shovel_management_plugin = if ($config_shovel and ($admin_enable or $management_enable)) { 'rabbitmq_shovel_management' } else { undef }
 
     $_plugins = delete_undef_values($plugins + [$management_plugin, $stomp_plugin, $auth_backend_ldap_plugin, $shovel_plugin, $shovel_management_plugin])
     file { 'enabled_plugins':
