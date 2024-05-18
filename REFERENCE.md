@@ -392,7 +392,7 @@ Data type: `String`
 
 The file to use as the rabbitmq.config template.
 
-Default value: `'rabbitmq/rabbitmq.config.erb'`
+Default value: `'rabbitmq/rabbitmq.config.epp'`
 
 ##### <a name="-rabbitmq--config_additional_variables"></a>`config_additional_variables`
 
